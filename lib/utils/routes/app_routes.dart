@@ -43,7 +43,8 @@ class AppRoutes {
         binding: RegisterBinding()),
     GetPage(
         name: loginScreen,
-        page: () => const LoginScreen(),
+        page: () => sign_it_in(),
+        // const LoginScreen(),
         binding: LoginBinding()),
   ];
 }

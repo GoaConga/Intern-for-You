@@ -20,7 +20,7 @@ void main() async {
 
 class Sign_in_Success {
   //static late String prof_username;
-  static late String username_pass;
+  static late String username_pass = 'company';
 }
 
 class Sign_in_Home extends StatefulWidget {
@@ -28,10 +28,12 @@ class Sign_in_Home extends StatefulWidget {
   _Sign_in_HomeState createState() => _Sign_in_HomeState();
 }
 
+final todoController = TextEditingController();
+final String username = Sign_in_Success.username_pass;
+
 class _Sign_in_HomeState extends State<Sign_in_Home> {
-  final String username = Sign_in_Success.username_pass;
+  late bool? val_intern;
   List<ParseObject> results = <ParseObject>[];
-  final todoController = TextEditingController();
 
   void addToDo() async {
     if (todoController.text.trim().isEmpty) {
@@ -116,72 +118,105 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
                                 //Get Parse Object Values
                                 final varTodo = snapshot.data![index];
                                 final varEmail = varTodo.get<String>('email')!;
-                                final varIntern = varTodo.get<bool>('intern')!;
+                                final varCompany =
+                                    varTodo.get<String>('company')!;
+                                final varDescription =
+                                    varTodo.get<String>('description')!;
+                                var varIntern = varTodo.get<bool>('intern')!;
+                                final con_company =
+                                    TextEditingController(text: varCompany);
+                                final con_description =
+                                    TextEditingController(text: varDescription);
 
                                 //*************************************
 
-                                return ListTile(
-                                  title: Text(varEmail),
-                                  leading: CircleAvatar(
-                                    child: Icon(
-                                        varIntern ? Icons.check : Icons.error),
-                                    backgroundColor:
-                                        varIntern ? Colors.green : Colors.blue,
-                                    foregroundColor: Colors.white,
+                                return Column(children: <Widget>[
+                                  Container(
+                                      height: 50,
+                                      width: 500,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: TextField(
+                                        controller: con_company,
+                                        decoration: InputDecoration(
+                                          labelText: "Company: ",
+                                          suffixIcon: Icon(
+                                            Icons.person,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      )),
+                                  Container(
+                                      height: 50,
+                                      width: 500,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: TextField(
+                                        controller: con_description,
+                                        decoration: InputDecoration(
+                                          labelText: "Description: ",
+                                          suffixIcon: Icon(
+                                            Icons.person,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      )),
+                                  Checkbox(
+                                      value: varIntern,
+                                      onChanged: (value) {
+                                        //  async {
+                                        // await updateTodo(
+                                        //     varTodo.objectId!,
+                                        //     value!,
+                                        //     'test description for company');
+                                        //val_intern = value;
+                                        setState(() {
+                                          //Refresh UI
+                                          varIntern = value!;
+                                        });
+                                      }),
+                                  GestureDetector(
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        width: 500,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(500),
+                                          gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              colors: [
+                                                Color(0xFF8A2387),
+                                                Color(0xFFE94057),
+                                                Color(0xFFF27121),
+                                              ]),
+                                        ),
+                                        child: MaterialButton(
+                                            onPressed: () async {
+                                              await updateTodo(
+                                                  varTodo.objectId!,
+                                                  val_intern!,
+                                                  con_company.text.trim(),
+                                                  con_description.text.trim());
+                                              setState(() {
+                                                //Refresh UI
+                                              });
+                                            },
+                                            padding: EdgeInsets.all(20.0),
+                                            child: Text(
+                                              'Update',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ))),
                                   ),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Checkbox(
-                                          value: varIntern,
-                                          onChanged: (value) async {
-                                            await updateTodo(
-                                                varTodo.objectId!,
-                                                value!,
-                                                'test description for company');
-                                            setState(() {
-                                              //Refresh UI
-                                            });
-                                          }),
-                                      GestureDetector(
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                  colors: [
-                                                    Color(0xFF8A2387),
-                                                    Color(0xFFE94057),
-                                                    Color(0xFFF27121),
-                                                  ]),
-                                            ),
-                                            child: MaterialButton(
-                                                onPressed: () {
-                                                  // Something.counter = varTitle;
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           Search_Profile()),
-                                                  // );
-                                                },
-                                                padding: EdgeInsets.all(20.0),
-                                                child: Text(
-                                                  'Login',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                ))),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                ]);
                               });
                         }
                     }
@@ -212,10 +247,12 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
     }
   }
 
-  Future<void> updateTodo(String id, bool intern, String description) async {
+  Future<void> updateTodo(
+      String id, bool intern, String company, String description) async {
     var todo = ParseObject('intern_database')
       ..objectId = id
       ..set('intern', intern)
+      ..set('company', company)
       ..set('description', description);
     await todo.save();
   }
