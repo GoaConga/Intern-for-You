@@ -192,7 +192,7 @@ class _BrowseHomeState extends State<Browse_Home> {
                                     final varInternship =
                                         varTodo.get<String>('internship')!;
                                     final varIs_Intern =
-                                        varTodo.get<bool>('intern')!;
+                                        varTodo.get<bool>('is_intern')!;
                                     final varC = varTodo.get<bool>('C')!;
                                     final varJava = varTodo.get<bool>('java')!;
                                     final varPython =

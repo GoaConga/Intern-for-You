@@ -6,6 +6,7 @@ import 'utils/initial_bindings.dart';
 import 'utils/localization/app_localization.dart';
 import 'utils/routes/app_routes.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:internsforyou/setup/setup_main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ void main() async {
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, debug: true);
-  runApp(const InternApp());
+  runApp(sign_it_in()); // const InternApp());
 }
 
 class InternApp extends StatelessWidget {

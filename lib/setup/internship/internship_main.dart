@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,13 @@ bool? python = false;
 bool? php = false;
 bool? CSS = false;
 String _database_name = 'intern_database';
+
+int intval_C = 0;
+int intval_java = 0;
+int intval_python = 0;
+int intval_php = 0;
+int intval_CSS = 0;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -74,7 +83,13 @@ class Internship_IntroScreen extends State<Internship_MyApp> {
                           FlatButton(
                             minWidth: 300.0,
                             height: 70.0,
-                            onPressed: () => {},
+                            onPressed: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => FlutterHome()),
+                              // );
+                            },
                             color: Colors.grey,
                             padding: EdgeInsets.all(10.0),
                             child: Column(
@@ -586,6 +601,7 @@ class Internship_FifthPage extends State<FifthRoute> {
                   minWidth: 300.0,
                   height: 70.0,
                   onPressed: () {
+                    trueCheck();
                     Save_User_Signup_Data.prof_is_intern = is_intern;
                     Save_User_Signup_Data.prof_username = _username.text.trim();
                     Save_User_Signup_Data.prof_email = _email.text.trim();
@@ -601,11 +617,15 @@ class Internship_FifthPage extends State<FifthRoute> {
                     Save_User_Signup_Data.prof_python = python;
                     Save_User_Signup_Data.prof_php = php;
                     Save_User_Signup_Data.prof_CSS = CSS;
-                    Save_User_Signup_Data.prof_C_value = 0;
-                    Save_User_Signup_Data.prof_java_value = 0;
-                    Save_User_Signup_Data.prof_python_value = 0;
-                    Save_User_Signup_Data.prof_php_value = 0;
-                    Save_User_Signup_Data.prof_CSS_value = 0;
+                    Save_User_Signup_Data.prof_C_value = intval_C.toDouble();
+                    Save_User_Signup_Data.prof_java_value =
+                        intval_java.toDouble();
+                    Save_User_Signup_Data.prof_python_value =
+                        intval_python.toDouble();
+                    Save_User_Signup_Data.prof_php_value =
+                        intval_php.toDouble();
+                    Save_User_Signup_Data.prof_CSS_value =
+                        intval_CSS.toDouble();
                     Save_User_Signup_Data.prof_database_name = _database_name;
                     Navigator.push(
                       context,
@@ -619,7 +639,7 @@ class Internship_FifthPage extends State<FifthRoute> {
                     // Replace with a Row for horizontal icon + text
                     children: <Widget>[
                       //Image.asset('images/img_intern1a1.png'),
-                      Text("Upload Logo")
+                      Text("Upload a photo to start")
                     ],
                   ),
                 )),
@@ -627,6 +647,26 @@ class Internship_FifthPage extends State<FifthRoute> {
         ),
       ),
     ));
+  }
+
+  void trueCheck() {
+    List<dynamic> listTruth = [C, java, python, php, CSS];
+    List<dynamic> Value_language = [
+      intval_C,
+      intval_java,
+      intval_python,
+      intval_php,
+      intval_CSS
+    ];
+    int var_in = 0;
+    while (var_in != 4) {
+      if (listTruth[var_in] == true) {
+        Value_language[var_in] = 10;
+      } else {
+        Value_language[var_in] = 0;
+      }
+      var_in = var_in + 1;
+    }
   }
 }
 

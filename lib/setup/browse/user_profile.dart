@@ -153,23 +153,24 @@ class _SearchProfileState extends State<Search_Profile> {
                               SizedBox(width: 242),
                               Container(
                                   width: 100,
-                                  child: Text(C_val.toString() + '/10',
+                                  child: Text(C_val.toString() + '0% match',
                                       style: TextStyle(color: Colors.white))),
                               Container(
                                   width: 100,
-                                  child: Text(java_val.toString() + '/10',
+                                  child: Text(java_val.toString() + '0% match',
                                       style: TextStyle(color: Colors.white))),
                               Container(
                                   width: 100,
-                                  child: Text(python_val.toString() + '/10',
+                                  child: Text(
+                                      python_val.toString() + '0% match',
                                       style: TextStyle(color: Colors.white))),
                               Container(
                                   width: 100,
-                                  child: Text(php_val.toString() + '/10',
+                                  child: Text(php_val.toString() + '0% match',
                                       style: TextStyle(color: Colors.white))),
                               Container(
                                   width: 100,
-                                  child: Text(CSS_val.toString() + '/10',
+                                  child: Text(CSS_val.toString() + '0% match',
                                       style: TextStyle(color: Colors.white))),
                             ]),
                           ]))),
