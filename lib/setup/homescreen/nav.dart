@@ -54,25 +54,8 @@ class _NavState extends State<Nav> {
           ),
           body: TabBarView(children: [
             Home(),
+            Delete_Home(),
             Browse_Home(),
-            Browse_Home(),
-            //buildPage('Setting Page'),
             Sign_in_Home(),
           ])));
-
-  Widget buildPage(String text) => Center(
-        child: ElevatedButton(
-            onPressed: addData,
-            child: Text('Query by friend count'),
-            style: ElevatedButton.styleFrom(primary: Colors.blue)),
-      );
-}
-
-void addData() async {
-  var profile = ParseObject('Profile');
-  profile.set('name', 'username');
-  profile.set('birthDay', DateTime.parse('1966-09-09'));
-  profile.set('friendCount', 2);
-  profile.set('favoriteFoods', ['Lobster', 'Bread']);
-  await profile.save();
 }

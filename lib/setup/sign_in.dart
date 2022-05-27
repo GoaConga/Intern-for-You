@@ -227,7 +227,7 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
                                             decoration: InputDecoration(
                                               labelText: "Email:",
                                               suffixIcon: Icon(
-                                                Icons.person,
+                                                Icons.email,
                                                 size: 20,
                                               ),
                                             ),
@@ -503,14 +503,13 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
   }
 }
 
-class Delete_User_Home extends StatefulWidget {
+class Delete_Home extends StatefulWidget {
   @override
-  _DeleteUserState createState() => _DeleteUserState();
+  Delete_HomeState createState() => Delete_HomeState();
 }
 
-class _DeleteUserState extends State<Delete_User_Home> {
+class Delete_HomeState extends State<Delete_Home> {
   List<ParseObject> results = <ParseObject>[];
-  final todoController = TextEditingController();
 
   void addToDo() async {
     if (todoController.text.trim().isEmpty) {
@@ -525,11 +524,11 @@ class _DeleteUserState extends State<Delete_User_Home> {
   void doQueryByName() async {
     // Create your query
     final QueryBuilder<ParseObject> parseQuery =
-        QueryBuilder<ParseObject>(ParseObject('User'));
+        QueryBuilder<ParseObject>(ParseObject('intern_database'));
 
     // `whereContains` is a basic query method that checks if string field
     // contains a specific substring
-    parseQuery.whereContains('email', todoController.text.trim());
+    parseQuery.whereContains('username', username);
 
     // The query will resolve only after calling this method, retrieving
     // an array of `ParseObjects`, if success
@@ -552,129 +551,110 @@ class _DeleteUserState extends State<Delete_User_Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Parse Todo List"),
-        backgroundColor: Colors.blueAccent,
-        centerTitle: true,
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-              padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      autocorrect: true,
-                      textCapitalization: TextCapitalization.sentences,
-                      controller: todoController,
-                      decoration: InputDecoration(
-                          labelText: "New todo",
-                          labelStyle: TextStyle(color: Colors.blueAccent)),
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.pink,
-                        size: 30.0,
-                      ),
-                      label: Text('Search'),
-                      onPressed: doQueryByName,
-                      style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20.0),
-                        ),
-                      ))
-                ],
-              )),
-          Expanded(
-              child: FutureBuilder<List<ParseObject>>(
-                  future: getTodo(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.waiting:
-                        return Center(
-                          child: Container(
-                              width: 100,
-                              height: 100,
-                              child: CircularProgressIndicator()),
-                        );
-                      default:
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text("Error..."),
-                          );
-                        }
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: Text("No Data..."),
-                          );
-                        } else {
-                          return ListView.builder(
-                              padding: EdgeInsets.only(top: 10.0),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                //*************************************
-                                //Get Parse Object Values
-                                final varTodo = snapshot.data![index];
-                                final varUsername =
-                                    varTodo.get<String>('username')!;
-                                //*************************************
+        appBar: AppBar(
+          title: Text("User update setting"),
+          backgroundColor: Color.fromARGB(255, 255, 0, 0),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+            child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 34, 34, 34),
+          ),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                  child: FutureBuilder<List<ParseObject>>(
+                      future: getTodo(),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                          case ConnectionState.waiting:
+                            return Center(
+                              child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  child: CircularProgressIndicator()),
+                            );
+                          default:
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text("Error..."),
+                              );
+                            }
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: Text("No Data..."),
+                              );
+                            } else {
+                              return ListView.builder(
+                                  padding: EdgeInsets.only(top: 10.0),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    //*************************************
+                                    //Get Parse Object Values
+                                    final varTodo = snapshot.data![index];
+                                    final varUsername =
+                                        varTodo.get<String>('username')!;
 
-                                return ListTile(
-                                    title: Text(varUsername),
-                                    leading: CircleAvatar(
-                                      child: Column(
-                                        children: [
-                                          Checkbox(
-                                              value: true, //varDone,
-                                              onChanged: (value) async {
-                                                await updateTodo(
-                                                    varTodo.objectId!, value!);
-                                                setState(() {
-                                                  //Refresh UI
-                                                });
-                                              }),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: Colors.blue,
+                                    final con_username = TextEditingController(
+                                        text: varUsername);
+
+                                    //*************************************
+
+                                    return Column(children: <Widget>[
+                                      Container(
+                                          height: 50,
+                                          width: 450,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: TextField(
+                                            controller: con_username,
+                                            decoration: InputDecoration(
+                                              labelText: "Username:",
+                                              suffixIcon: Icon(
+                                                Icons.person,
+                                                size: 20,
+                                              ),
                                             ),
-                                            onPressed: () async {
-                                              await deleteTodo(
-                                                  varTodo.objectId!);
-                                              setState(() {
-                                                final snackBar = SnackBar(
-                                                  content:
-                                                      Text("Todo deleted!"),
-                                                  duration:
-                                                      Duration(seconds: 2),
-                                                );
-                                                ScaffoldMessenger.of(context)
-                                                  ..removeCurrentSnackBar()
-                                                  ..showSnackBar(snackBar);
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ));
-                              });
+                                          )),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.blue,
+                                        ),
+                                        onPressed: () async {
+                                          await deleteTodo(varTodo.objectId!);
+                                          setState(() {
+                                            final snackBar = SnackBar(
+                                              content: Text("Todo deleted!"),
+                                              duration: Duration(seconds: 2),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                              ..removeCurrentSnackBar()
+                                              ..showSnackBar(snackBar);
+                                          });
+                                        },
+                                      )
+                                    ]);
+                                  });
+                            }
                         }
-                    }
-                  }))
-        ],
-      ),
-    );
+                      }))
+            ],
+          ),
+        )));
   }
 
   Future<List<ParseObject>> getTodo() async {
     QueryBuilder<ParseObject> queryTodo =
-        QueryBuilder<ParseObject>(ParseObject('User'));
+        QueryBuilder<ParseObject>(ParseObject('intern_database'));
     //queryTodo.whereContains('password', 'w456456');
-    queryTodo.whereContains('username', todoController.text.trim());
+    queryTodo.whereContains('username', username);
     final ParseResponse apiResponse = await queryTodo.query();
 
     if (apiResponse.success && apiResponse.results != null) {
@@ -684,15 +664,8 @@ class _DeleteUserState extends State<Delete_User_Home> {
     }
   }
 
-  Future<void> updateTodo(String id, bool done) async {
-    var todo = ParseObject('intern_database')
-      ..objectId = id
-      ..set('java', done);
-    await todo.save();
-  }
-
   Future<void> deleteTodo(String id) async {
-    var todo = ParseObject('intern_database')..objectId = id;
+    var todo = ParseObject('User')..objectId = id;
     await todo.delete();
   }
 }
