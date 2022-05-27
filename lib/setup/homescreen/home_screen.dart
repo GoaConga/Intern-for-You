@@ -177,6 +177,36 @@ class Main_HomePageState extends State<Home> {
                                 ]),
                           ),
                           child: MaterialButton(
+                              onPressed:
+                                  !isLoggedIn ? null : () => doUserLogout(),
+                              padding: EdgeInsets.all(20.0),
+                              child: Text(
+                                'Logout',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal),
+                              ))),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Color(0xFF8A2387),
+                                  Color(0xFFE94057),
+                                  Color(0xFFF27121),
+                                ]),
+                          ),
+                          child: MaterialButton(
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
