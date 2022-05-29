@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:internsforyou/setup/homescreen/home_screen.dart';
 import 'package:internsforyou/setup/browse/browse_screen.dart';
-import 'package:internsforyou/setup/sign_in.dart';
+import 'package:internsforyou/setup/setting/sign_in.dart';
 
 class Nav extends StatefulWidget {
   @override

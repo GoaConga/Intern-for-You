@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:internsforyou/setup/browse/save_database.dart';
 
 bool show = true;
-bool? is_intern = true;
 final _username = TextEditingController();
 final _email = TextEditingController();
 final _password = TextEditingController();
@@ -557,7 +556,7 @@ class Intern_FifthPage extends State<Intern_05Route> {
                       minWidth: 300.0,
                       height: 70.0,
                       onPressed: () {
-                        Save_User_Signup_Data.prof_is_intern = is_intern;
+                        Save_User_Signup_Data.prof_is_intern = true;
                         Save_User_Signup_Data.prof_username =
                             _username.text.trim();
                         Save_User_Signup_Data.prof_email = _email.text.trim();

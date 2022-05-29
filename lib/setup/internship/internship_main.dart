@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:internsforyou/setup/browse/save_database.dart';
 
 bool show = true;
-bool is_intern = false;
 final _username = TextEditingController();
 final _email = TextEditingController();
 final _password = TextEditingController();
@@ -600,7 +599,7 @@ class Internship_FifthPage extends State<FifthRoute> {
                   height: 70.0,
                   onPressed: () {
                     trueCheck();
-                    Save_User_Signup_Data.prof_is_intern = is_intern;
+                    Save_User_Signup_Data.prof_is_intern = false;
                     Save_User_Signup_Data.prof_username = _username.text.trim();
                     Save_User_Signup_Data.prof_email = _email.text.trim();
                     Save_User_Signup_Data.prof_password = _password.text.trim();

@@ -9,7 +9,7 @@ import 'package:internsforyou/setup/setup_main.dart';
 
 class Save_User_Signup_Data {
   //static late String prof_username;
-  static late bool? prof_is_intern;
+  static late bool prof_is_intern;
   static late String prof_username;
   static late String prof_email;
   static late String prof_password;
@@ -74,7 +74,7 @@ class SaveDataPage extends StatefulWidget {
 }
 
 class _SaveDataPageState extends State<SaveDataPage> {
-  final bool? is_intern = Save_User_Signup_Data.prof_is_intern;
+  final bool is_intern = Save_User_Signup_Data.prof_is_intern;
   final String username = Save_User_Signup_Data.prof_username;
   final String email = Save_User_Signup_Data.prof_email;
   final String password = Save_User_Signup_Data.prof_password;

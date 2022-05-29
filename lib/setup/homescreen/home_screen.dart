@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:internsforyou/setup/guide/guide_main.dart';
 import 'package:internsforyou/setup/setup_main.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:internsforyou/setup/sign_in.dart';
+import 'package:internsforyou/setup/setting/sign_in.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -269,7 +269,7 @@ class Main_HomePageState extends State<Home> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Error!"),
+          title: const Text("User Sign In Properly Required"), // Error....
           content: Text(errorMessage),
           actions: <Widget>[
             new TextButton(

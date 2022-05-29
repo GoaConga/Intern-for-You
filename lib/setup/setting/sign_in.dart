@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:internsforyou/setup/browse/user_profile.dart';
+import 'package:internsforyou/setup/setting/rest_password.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final keyApplicationId = 'Kj9eT8bzLnfOk4tTjRPFrnrRoOdUONFb5Es4c8vY';
-
   final keyClientKey = 'TInUGQ88j0d7hUrpuDoxj8kOdOwceBtSwEglmmgr';
   final keyParseServerUrl = 'https://parseapi.back4app.com';
 
@@ -21,7 +21,7 @@ void main() async {
 
 class Sign_in_Success {
   //static late String prof_username;
-  static late String username_pass = 'intern';
+  static late String username_pass = '1234';
 }
 
 class Sign_in_Home extends StatefulWidget {
@@ -168,12 +168,15 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
                                         TextEditingController(
                                             text: varDescription);
 
-                                    double _C_value = varC_val.toDouble();
-                                    double _java_value = varJava_val.toDouble();
-                                    double _python_value =
+                                    late double _C_value = varC_val.toDouble();
+                                    late double _java_value =
+                                        varJava_val.toDouble();
+                                    late double _python_value =
                                         varPython_val.toDouble();
-                                    double _php_value = varPhp_val.toDouble();
-                                    double _CSS_value = varCSS_val.toDouble();
+                                    late double _php_value =
+                                        varPhp_val.toDouble();
+                                    late double _CSS_value =
+                                        varCSS_val.toDouble();
 
                                     //*************************************
 
@@ -232,6 +235,27 @@ class _Sign_in_HomeState extends State<Sign_in_Home> {
                                               ),
                                             ),
                                           )),
+                                      SizedBox(height: 20),
+                                      FlatButton(
+                                        minWidth: 450.0,
+                                        height: 70.0,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ResetPasswordPage()),
+                                          );
+                                        },
+                                        color: Colors.red,
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          // Replace with a Row for horizontal icon + text
+                                          children: <Widget>[
+                                            //Image.asset('images/img_intern1a1.png'),
+                                            Text("Change Password")
+                                          ],
+                                        ),
+                                      ),
                                       SizedBox(height: 20),
                                       Container(
                                           height: 250,
