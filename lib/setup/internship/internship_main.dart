@@ -3,31 +3,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:internsforyou/setup/browse/save_database.dart';
 
-bool show = true;
-final _username = TextEditingController();
-final _email = TextEditingController();
-final _password = TextEditingController();
-final _company = TextEditingController();
-final _bio = TextEditingController();
-final _internship = TextEditingController();
-final _description = TextEditingController();
-bool? C = false;
-bool? java = false;
-bool? python = false;
-bool? php = false;
-bool? CSS = false;
-String _database_name = 'intern_database';
+class Internship_Static {
+  static bool show = true;
+  static final _username = TextEditingController();
+  static final _email = TextEditingController();
+  static final _password = TextEditingController();
+  static final _company = TextEditingController();
+  static final _bio = TextEditingController();
+  static final _internship = TextEditingController();
+  static final _description = TextEditingController();
+  static bool? C = false;
+  static bool? java = false;
+  static bool? python = false;
+  static bool? php = false;
+  static bool? CSS = false;
+  static String _database_name = 'intern_database';
 
-int intval_C = 0;
-int intval_java = 0;
-int intval_python = 0;
-int intval_php = 0;
-int intval_CSS = 0;
+  static int intval_C = 0;
+  static int intval_java = 0;
+  static int intval_python = 0;
+  static int intval_php = 0;
+  static int intval_CSS = 0;
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  show = prefs.getBool('ON_BOARDING') ?? true;
+  //show = prefs.getBool('ON_BOARDING') ?? true;
   runApp(Internship_MyApp());
 }
 
@@ -108,9 +110,9 @@ class FirstRoute extends StatefulWidget {
 
 class Internship_FirstPage extends State<FirstRoute> {
   void addToDo() async {
-    if (_username.text.trim().isEmpty ||
-        _email.text.trim().isEmpty ||
-        _password.text.trim().isEmpty) {
+    if (Internship_Static._username.text.trim().isEmpty ||
+        Internship_Static._email.text.trim().isEmpty ||
+        Internship_Static._password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty username/email/password"),
         duration: Duration(seconds: 2),
@@ -144,7 +146,7 @@ class Internship_FirstPage extends State<FirstRoute> {
                     autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     textCapitalization: TextCapitalization.none,
-                    controller: _email,
+                    controller: Internship_Static._email,
                     decoration: InputDecoration(
                       labelText: 'Email Address',
                       suffixIcon: Icon(
@@ -166,7 +168,7 @@ class Internship_FirstPage extends State<FirstRoute> {
                   child: TextField(
                     autocorrect: true,
                     textCapitalization: TextCapitalization.sentences,
-                    controller: _username,
+                    controller: Internship_Static._username,
                     decoration: InputDecoration(
                       labelText: 'Username',
                       suffixIcon: Icon(
@@ -188,7 +190,7 @@ class Internship_FirstPage extends State<FirstRoute> {
                   child: TextField(
                     autocorrect: true,
                     textCapitalization: TextCapitalization.sentences,
-                    controller: _password,
+                    controller: Internship_Static._password,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Passwords',
@@ -267,9 +269,9 @@ class Internship_FirstPage extends State<FirstRoute> {
   }
 
   void doUserRegistration() async {
-    final username = _username.text.trim();
-    final email = _email.text.trim();
-    final password = _password.text.trim();
+    final username = Internship_Static._username.text.trim();
+    final email = Internship_Static._email.text.trim();
+    final password = Internship_Static._password.text.trim();
 
     final user = ParseUser.createUser(username, password, email);
 
@@ -290,7 +292,8 @@ class SecondRoute extends StatefulWidget {
 
 class Internship_SecondPage extends State<SecondRoute> {
   void addToDo() async {
-    if (_company.text.trim().isEmpty || _bio.text.trim().isEmpty) {
+    if (Internship_Static._company.text.trim().isEmpty ||
+        Internship_Static._bio.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty company and bio"),
         duration: Duration(seconds: 2),
@@ -325,7 +328,7 @@ class Internship_SecondPage extends State<SecondRoute> {
                         child: Container(
                           width: 250,
                           child: TextField(
-                            controller: _company,
+                            controller: Internship_Static._company,
                             decoration: InputDecoration(
                               labelText: 'Not a real company TLC',
                               suffixIcon: Icon(
@@ -346,7 +349,7 @@ class Internship_SecondPage extends State<SecondRoute> {
                             width: 250,
                             height: 300,
                             child: TextFormField(
-                                controller: _bio,
+                                controller: Internship_Static._bio,
                                 minLines: 20,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
@@ -463,7 +466,8 @@ class FourthRoute extends StatefulWidget {
 
 class Internship_FourthPage extends State<FourthRoute> {
   void addToDo() async {
-    if (_internship.text.trim().isEmpty || _description.text.trim().isEmpty) {
+    if (Internship_Static._internship.text.trim().isEmpty ||
+        Internship_Static._description.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty internship and description"),
         duration: Duration(seconds: 2),
@@ -494,7 +498,7 @@ class Internship_FourthPage extends State<FourthRoute> {
                 child: Container(
                   width: 250,
                   child: TextField(
-                    controller: _internship,
+                    controller: Internship_Static._internship,
                     decoration: InputDecoration(
                       labelText: 'Internship title',
                       suffixIcon: Icon(
@@ -515,7 +519,7 @@ class Internship_FourthPage extends State<FourthRoute> {
                     width: 250,
                     height: 300,
                     child: TextFormField(
-                        controller: _description,
+                        controller: Internship_Static._description,
                         minLines: 20,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
@@ -561,7 +565,8 @@ class FifthRoute extends StatefulWidget {
 
 class Internship_FifthPage extends State<FifthRoute> {
   void addToDo() async {
-    if (_internship.text.trim().isEmpty || _description.text.trim().isEmpty) {
+    if (Internship_Static._internship.text.trim().isEmpty ||
+        Internship_Static._description.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty internship and description"),
         duration: Duration(seconds: 2),
@@ -600,30 +605,38 @@ class Internship_FifthPage extends State<FifthRoute> {
                   onPressed: () {
                     trueCheck();
                     Save_User_Signup_Data.prof_is_intern = false;
-                    Save_User_Signup_Data.prof_username = _username.text.trim();
-                    Save_User_Signup_Data.prof_email = _email.text.trim();
-                    Save_User_Signup_Data.prof_password = _password.text.trim();
-                    Save_User_Signup_Data.prof_company = _company.text.trim();
-                    Save_User_Signup_Data.prof_bio = _bio.text.trim();
+                    Save_User_Signup_Data.prof_username =
+                        Internship_Static._username.text.trim();
+                    Save_User_Signup_Data.prof_email =
+                        Internship_Static._email.text.trim();
+                    Save_User_Signup_Data.prof_password =
+                        Internship_Static._password.text.trim();
+                    Save_User_Signup_Data.prof_company =
+                        Internship_Static._company.text.trim();
+                    Save_User_Signup_Data.prof_bio =
+                        Internship_Static._bio.text.trim();
                     Save_User_Signup_Data.prof_internship =
-                        _internship.text.trim();
+                        Internship_Static._internship.text.trim();
                     Save_User_Signup_Data.prof_description =
-                        _description.text.trim();
-                    Save_User_Signup_Data.prof_C = C;
-                    Save_User_Signup_Data.prof_java = java;
-                    Save_User_Signup_Data.prof_python = python;
-                    Save_User_Signup_Data.prof_php = php;
-                    Save_User_Signup_Data.prof_CSS = CSS;
-                    Save_User_Signup_Data.prof_C_value = intval_C.toDouble();
+                        Internship_Static._description.text.trim();
+                    Save_User_Signup_Data.prof_C = Internship_Static.C;
+                    Save_User_Signup_Data.prof_java = Internship_Static.java;
+                    Save_User_Signup_Data.prof_python =
+                        Internship_Static.python;
+                    Save_User_Signup_Data.prof_php = Internship_Static.php;
+                    Save_User_Signup_Data.prof_CSS = Internship_Static.CSS;
+                    Save_User_Signup_Data.prof_C_value =
+                        Internship_Static.intval_C.toDouble();
                     Save_User_Signup_Data.prof_java_value =
-                        intval_java.toDouble();
+                        Internship_Static.intval_java.toDouble();
                     Save_User_Signup_Data.prof_python_value =
-                        intval_python.toDouble();
+                        Internship_Static.intval_python.toDouble();
                     Save_User_Signup_Data.prof_php_value =
-                        intval_php.toDouble();
+                        Internship_Static.intval_php.toDouble();
                     Save_User_Signup_Data.prof_CSS_value =
-                        intval_CSS.toDouble();
-                    Save_User_Signup_Data.prof_database_name = _database_name;
+                        Internship_Static.intval_CSS.toDouble();
+                    Save_User_Signup_Data.prof_database_name =
+                        Internship_Static._database_name;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -647,13 +660,19 @@ class Internship_FifthPage extends State<FifthRoute> {
   }
 
   void trueCheck() {
-    List<dynamic> listTruth = [C, java, python, php, CSS];
+    List<dynamic> listTruth = [
+      Internship_Static.C,
+      Internship_Static.java,
+      Internship_Static.python,
+      Internship_Static.php,
+      Internship_Static.CSS
+    ];
     List<dynamic> Value_language = [
-      intval_C,
-      intval_java,
-      intval_python,
-      intval_php,
-      intval_CSS
+      Internship_Static.intval_C,
+      Internship_Static.intval_java,
+      Internship_Static.intval_python,
+      Internship_Static.intval_php,
+      Internship_Static.intval_CSS
     ];
     int var_in = 0;
     while (var_in != 4) {
@@ -685,10 +704,10 @@ class Internship_CheckBoxes extends State<CheckboxesRoute> {
                 color: Colors.white60, borderRadius: BorderRadius.circular(10)),
             child: Column(children: [
               CheckboxListTile(
-                value: C,
+                value: Internship_Static.C,
                 onChanged: (val) {
                   setState(() {
-                    C = val;
+                    Internship_Static.C = val;
                   });
                 },
                 activeColor: Colors.green,
@@ -700,10 +719,10 @@ class Internship_CheckBoxes extends State<CheckboxesRoute> {
                 color: Colors.green,
               ),
               CheckboxListTile(
-                value: java,
+                value: Internship_Static.java,
                 onChanged: (val) {
                   setState(() {
-                    java = val;
+                    Internship_Static.java = val;
                   });
                 },
                 activeColor: Colors.green,
@@ -715,10 +734,10 @@ class Internship_CheckBoxes extends State<CheckboxesRoute> {
                 color: Colors.green,
               ),
               CheckboxListTile(
-                value: python,
+                value: Internship_Static.python,
                 onChanged: (val) {
                   setState(() {
-                    python = val;
+                    Internship_Static.python = val;
                   });
                 },
                 activeColor: Colors.green,
@@ -730,10 +749,10 @@ class Internship_CheckBoxes extends State<CheckboxesRoute> {
                 color: Colors.green,
               ),
               CheckboxListTile(
-                value: php,
+                value: Internship_Static.php,
                 onChanged: (val) {
                   setState(() {
-                    php = val;
+                    Internship_Static.php = val;
                   });
                 },
                 activeColor: Colors.green,
@@ -745,10 +764,10 @@ class Internship_CheckBoxes extends State<CheckboxesRoute> {
                 color: Colors.green,
               ),
               CheckboxListTile(
-                value: CSS,
+                value: Internship_Static.CSS,
                 onChanged: (val) {
                   setState(() {
-                    CSS = val;
+                    Internship_Static.CSS = val;
                   });
                 },
                 activeColor: Colors.green,

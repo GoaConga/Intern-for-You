@@ -2,4 +2,9 @@
 class Skills {
   late String skillName;
   late int skillProficiency;
+
+    Skills({
+    this.skillName = '',
+    this.skillProficiency = 0
+  });
 }

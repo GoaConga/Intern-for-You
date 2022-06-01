@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:internsforyou/theme/ify_custom_theme.dart';
 
 
-Widget primaryTextField(String preText, String hintText, bool isPassword, TextEditingController editingController) {
+Widget primaryTextField(String preText, String hintText, bool isPassword, TextEditingController editingController, TextInputType inputType, int maxLines, int maxLength) {
   return Column(
     children: [
       Padding(
@@ -14,8 +14,11 @@ Widget primaryTextField(String preText, String hintText, bool isPassword, TextEd
             style: IFYFonts.inputPreText,),),
       ),
       TextFormField(
+        keyboardType: inputType,
         controller: editingController,
         obscureText: isPassword,
+        maxLines: maxLines,
+        maxLength: maxLength,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           hintText: hintText,
@@ -28,6 +31,12 @@ Widget primaryTextField(String preText, String hintText, bool isPassword, TextEd
           ),
         ),
         style: IFYFonts.inputFieldText,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'input is empty';
+          }
+          return null;
+        }
       ),
     ],
   );

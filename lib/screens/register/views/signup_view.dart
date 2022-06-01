@@ -1,188 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internsforyou/screens/register/controller.dart';
-import 'package:internsforyou/utils/theme/colors.dart';
-// import 'package:flutter_svg/svg.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-// import '../../../theme/app_decoration.dart';
-import '../../../theme/app_style.dart';
-import '../../../utils/color_constant.dart';
-import '../../../utils/image_constant.dart';
-import '../../../utils/math_utils.dart';
-// import '../../../utils/routes/app_routes.dart';
-
+import 'package:internsforyou/theme/ify_custom_theme.dart';
+import 'package:internsforyou/utils/routes/app_routes.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-class RegisterScreen extends StatefulWidget {
-  @override
-  RegisterScreenState createState() => RegisterScreenState();
+import '../widgets/ify_textfields.dart';
+
+class Static_RegisterScreen {
+  static final bool isCompamy = true;
+  static final _formKey = GlobalKey<FormState>();
+  static TextEditingController emailController = TextEditingController();
+  static TextEditingController passwordController = TextEditingController();
+  static TextEditingController password2Controller = TextEditingController();
 }
 
-final _username = TextEditingController();
-final _email = TextEditingController();
-final _password = TextEditingController();
+class RegisterScreen extends GetView<RegisterController> {
+  RegisterScreen({Key? key}) : super(key: key);
 
-class RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: ColorConstant.gray800,
-            body: SizedBox(
-                width: size.width,
-                child: Stack(alignment: Alignment.bottomCenter, children: [
-                  Align(
-                      alignment: Alignment.center,
-                      child:
-                          Image.asset(ImageConstant.kImgWA, fit: BoxFit.fill)),
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+            child: Form(
+              key: Static_RegisterScreen._formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
                   Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Align(
-                            alignment: Alignment.topCenter,
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text('Basic Accont Details',
-                                  style:
-                                      AppStyle.textStyleRobotoCondensedbold24),
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextFormField(
-                            controller: _username,
-                            decoration: const InputDecoration(
-                              labelText: 'Email Address',
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(
-                                Icons.error,
-                              ),
-                            ),
-                          ),
+                    children: [
+                      Text(
+                          '${Static_RegisterScreen.isCompamy ? 'Company' : 'Personal'} Account Details',
+                          style: IFYFonts.introHeader),
+                      Container()
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 2),
+                          child: primaryTextField(
+                              '${Static_RegisterScreen.isCompamy ? 'company' : 'personal'} email address',
+                              'example@mail.com',
+                              false,
+                              Static_RegisterScreen.emailController,
+                              TextInputType.emailAddress,
+                              1,
+                              30)),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 2),
+                          child: primaryTextField(
+                              'password',
+                              'password',
+                              true,
+                              Static_RegisterScreen.passwordController,
+                              TextInputType.visiblePassword,
+                              1,
+                              30)),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 10, 40, 2),
+                          child: primaryTextField(
+                              're-type password',
+                              'password',
+                              true,
+                              Static_RegisterScreen.password2Controller,
+                              TextInputType.visiblePassword,
+                              1,
+                              30)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: ElevatedButton(
+                          child: const Text('Create Account'),
+                          style: IFYButtons.primaryButton,
+                          onPressed: () {
+                            if (Static_RegisterScreen._formKey.currentState!
+                                .validate()) {
+                              doUserRegistration();
+                              Get.toNamed(AppRoutes
+                                  .userSkillsScreen); // detailsFormScreen
+                              debugPrint(
+                                  "Username: ${Static_RegisterScreen.emailController.text}\nPassword: ${Static_RegisterScreen.passwordController.text}");
+                              //TODO: Continue if passed
+                            } else {
+                              debugPrint('false');
+                            }
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextFormField(
-                            obscureText: true,
-                            controller: _password,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(
-                                Icons.error,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextFormField(
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Confirm Password',
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(
-                                Icons.error,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ]),
-                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0),
-                        child: Align(
-                            child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(475, 60),
-                                    primary:
-                                        const Color.fromRGBO(255, 29, 72, 1)),
-                                child: Text(
-                                  "Register Account".tr,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      AppStyle.textStyleRobotoCondensedlight24,
-                                )))),
-                    Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                        child: Align(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  doUserRegistration();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(475, 60),
-                                    primary: Colors.white30),
-                                child: Text(
-                                  "Continue Anonymously".tr,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      AppStyle.textStyleRobotoCondensedlight24,
-                                ))))
-                  ])
-                ])))
-        // )
-        );
-  }
-
-  void showSuccess() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Success!"),
-          content: const Text("User was successfully created!"),
-          actions: <Widget>[
-            // new FlatButton(
-            //   child: const Text("OK"),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => SecondRoute()),
-            //     );
-            //   },
-            // ),
-          ],
-        );
-      },
-    );
-  }
-
-  void showError(String errorMessage) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Error!"),
-          content: Text(errorMessage),
-          actions: <Widget>[
-            new FlatButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ),
     );
   }
 
   void doUserRegistration() async {
-    final username = _username.text.trim();
-    final password = _password.text.trim();
+    final username = Static_RegisterScreen.passwordController.text.trim();
+    final email = Static_RegisterScreen.emailController.text.trim();
+    final password = Static_RegisterScreen.passwordController.text.trim();
 
-    final user = ParseUser.createUser(username, password);
+    final user = ParseUser.createUser(username, password, email);
 
     var response = await user.signUp();
 
     if (response.success) {
-      showSuccess();
+      //showSuccess();
     } else {
-      showError(response.error!.message);
+      //showError(response.error!.message);
     }
   }
 }

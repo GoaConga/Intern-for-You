@@ -13,5 +13,15 @@ class Student {
   late DateTime dob;
   late String bio;
   late SocialMedia socialMedia;
-  late String displayImage;
+  String displayImage;
+  late int score;
+
+  Student({
+    this.firstName = 'John',
+    this.lastName = 'Smith',
+    this.bio = 'Placeholder bio',
+    this.score = 0,
+    this.skills = const [],
+    this.displayImage = 'images/intern.png'
+  });
 }

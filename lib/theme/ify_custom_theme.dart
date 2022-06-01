@@ -7,6 +7,7 @@ class IFYColors {
   static Color altbuttonTransparent = const Color.fromARGB(50, 255, 255, 255);
   static Color altbuttonHighlight = const Color.fromARGB(100, 255, 255, 255);
   static Color inputFieldBackground = const Color.fromARGB(180, 255, 255, 255);
+  static Color internListButtonBackground = const Color.fromARGB(255, 173, 173, 173);
 }
 
 class IFYButtons {
@@ -75,6 +76,12 @@ class IFYButtons {
     textStyle: MaterialStateProperty.all(IFYFonts.textButtonFont),
     foregroundColor: MaterialStateProperty.all(Colors.white),
   );
+
+  static ButtonStyle internListButton = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(IFYColors.buttonGray),
+    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 10, vertical: 2)),
+    minimumSize: MaterialStateProperty.all(const Size.fromHeight(100)),
+  );
 }
 
 class IFYFonts {
@@ -122,6 +129,44 @@ class IFYFonts {
     fontFamily: 'RobotoRegular',
     fontSize: 20,
     color: Colors.white,
+  );
+
+  static TextStyle internListNameText = const TextStyle(
+    fontFamily: 'RobotoCondensed',
+    fontSize: 18,
+    color: Colors.white
+  );
+
+  static TextStyle internListDescriptionText = const TextStyle(
+    fontFamily: 'RobotoThin',
+    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.w100,
+    fontSize: 14,
+    color: Colors.white
+  );
+
+  static TextStyle scoreButtonText = const TextStyle(
+    fontFamily: 'RobotoCondensed',
+    fontSize: 20,
+    color: Colors.white
+  );
+
+  static TextStyle profileMainScoreText = const TextStyle(
+    fontFamily: 'RobotoCondensed',
+    fontSize: 36,
+    color: Colors.white
+  );
+
+  static TextStyle profileQualText = const TextStyle(
+    fontFamily: 'RobotoCondensed',
+    fontSize: 18,
+    color: Colors.white
+  );
+
+  static TextStyle skillListName = const TextStyle(
+    fontFamily: 'RobotoRegular',
+    fontSize: 18,
+    color: Colors.black
   );
 }
 

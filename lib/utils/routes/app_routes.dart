@@ -1,16 +1,23 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
+import 'package:internsforyou/models/student/student.dart';
+import 'package:internsforyou/screens/browse/binding.dart';
+import 'package:internsforyou/screens/browse/views/browse_interns.dart';
+import 'package:internsforyou/screens/browse/views/view_intern.dart';
 import 'package:internsforyou/screens/intro/views/guest_view.dart';
 import 'package:internsforyou/screens/intro/views/selection_view.dart';
 import 'package:internsforyou/screens/register/binding.dart';
 import 'package:internsforyou/screens/register/views/details_view.dart';
+import 'package:internsforyou/screens/register/views/intern_skills_view.dart';
 import 'package:internsforyou/screens/register/views/signup_view.dart';
+import 'package:internsforyou/utils/math_utils.dart';
 
 import '../../screens/intro/binding.dart';
 import '../../screens/intro/views/intro_view.dart';
 import '../../screens/login/binding.dart';
 import '../../screens/login/view.dart';
-import 'package:internsforyou/setup/setup_main.dart';
-import 'package:internsforyou/setup/guide/guide_main.dart';
+import '../../screens/register/views/intern_profficiency_view.dart';
 
 class AppRoutes {
   static String detailsFormScreen = '/details';
@@ -19,6 +26,10 @@ class AppRoutes {
   static String introGuestScreen = '/intro/2';
   static String introSelectionScreen = '/intro/1';
   static String introScreen = '/intro';
+  static String browseInternScreen = '/browse/interns';
+  static String showInternScreen = '/browse/intern/';
+  static String userSkillScreen = '/skill';
+  static String userSkillsScreen = '/skills';
 
   static List<GetPage> pages = [
     GetPage(
@@ -35,16 +46,29 @@ class AppRoutes {
         binding: IntroBinding()),
     GetPage(
         name: registerScreen,
-        page: () => Guide_MyApp(),
+        page: () => RegisterScreen(),
         binding: RegisterBinding()),
     GetPage(
         name: detailsFormScreen,
-        page: () => const UserDetailsScreen(),
+        page: () => UserDetailsScreen(),
         binding: RegisterBinding()),
     GetPage(
-        name: loginScreen,
-        page: () => sign_it_in(),
-        // const LoginScreen(),
-        binding: LoginBinding()),
+        name: loginScreen, page: () => LoginScreen(), binding: LoginBinding()),
+    GetPage(
+        name: browseInternScreen,
+        page: () => const BrowseInternScreen(),
+        binding: BrowseBinding()),
+    GetPage(
+        name: showInternScreen,
+        page: () => const InternScreen(),
+        binding: BrowseBinding()),
+    GetPage(
+        name: userSkillScreen,
+        page: () => UserSkillsScreen(),
+        binding: BrowseBinding()),
+    GetPage(
+        name: userSkillsScreen,
+        page: () => UserSkillsScreen(),
+        binding: BrowseBinding()),
   ];
 }
